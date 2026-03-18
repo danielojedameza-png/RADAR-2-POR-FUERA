@@ -11,6 +11,7 @@
 |------------|-----------|
 | Settings → Pages muestra *"Upgrade or make this repository public"* | 👉 [Paso 1 — Hacer repo público](#paso-1--hacer-el-repositorio-público) |
 | Settings → Pages muestra fuente = **Acciones de GitHub** pero ofrece botones "Configurar" (Jekyll / HTML estático) | 👉 [Paso 3 — Fusionar el PR](#paso-3--fusionar-la-pull-request-a-main-) ← **NO hacer clic en esos botones** |
+| Settings → Pages muestra campo **"Dominio personalizado"** vacío | ✅ **Eso está bien — déjalo vacío y [fusiona el PR](#paso-3--fusionar-la-pull-request-a-main-)** |
 | Actions → solo aparece "Copilot coding agent", sin "🌿 Radar AGRODASIN" | 👉 [Paso 3 — Fusionar el PR](#paso-3--fusionar-la-pull-request-a-main-) |
 | Actions → aparece "🌿 Radar AGRODASIN" con ✅ verde | ✅ **Portal publicado** — visita el [enlace](#listo-el-portal-está-en-línea-en) |
 
@@ -72,6 +73,12 @@ significa que el repositorio es **privado** y GitHub Pages requiere una de estas
 > Verás dos tarjetas: *"GitHub Pages Jekyll"* y *"HTML estático"*. **Ignóralas por completo.**
 > Esos son plantillas genéricas de GitHub. El workflow del Radar ya está listo en la PR.
 > Hacer clic en "Configurar" crearía un workflow diferente e innecesario.
+
+> **ℹ️ Dominio personalizado — déjalo vacío**
+> Más abajo en la página verás una sección *"Dominio personalizado"* con un campo de texto vacío.
+> **No escribas nada ahí.** No necesitas un dominio propio.
+> El portal funciona perfectamente en la dirección gratuita de GitHub:
+> `https://danielojedameza-png.github.io/RADAR-2-POR-FUERA/`
 
 #### ✅ Si ya completaste los Pasos 1 y 2 — ir directamente al Paso 3
 
