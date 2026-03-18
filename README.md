@@ -12,7 +12,7 @@
 | Settings → Pages muestra *"Upgrade or make this repository public"* | 👉 [Paso 1 — Hacer repo público](#paso-1--hacer-el-repositorio-público) |
 | Settings → Pages muestra fuente = **Acciones de GitHub** pero ofrece botones "Configurar" (Jekyll / HTML estático) | 👉 [Paso 3 — Fusionar el PR](#paso-3--fusionar-la-pull-request-a-main-) ← **NO hacer clic en esos botones** |
 | Settings → Pages muestra campo **"Dominio personalizado"** vacío | ✅ **Eso está bien — déjalo vacío y [fusiona el PR](#paso-3--fusionar-la-pull-request-a-main-)** |
-| Settings → Pages dice **"Comprobación de DNS en curso"** o **"HTTPS no disponible"** para `www.agrodasin.org.co` | 👉 [Configuración de dominio personalizado](#-dominio-personalizado-wwwagrodasinorgco) |
+| Settings → Pages dice **"Comprobación de DNS en curso"** o **"HTTPS no disponible"** para `www.agrodasin.org.co` | 👉 [Configuración de dominio personalizado](#-dominio-personalizado-opcional) |
 | Actions → solo aparece "Copilot coding agent", sin "🌿 Radar AGRODASIN" | 👉 [Paso 3 — Fusionar el PR](#paso-3--fusionar-la-pull-request-a-main-) |
 | Actions → aparece "🌿 Radar AGRODASIN" con ✅ verde | ✅ **Portal publicado** — visita el [enlace](#listo-el-portal-está-en-línea-en) |
 
@@ -76,11 +76,10 @@ significa que el repositorio es **privado** y GitHub Pages requiere una de estas
 > Hacer clic en "Configurar" crearía un workflow diferente e innecesario.
 
 > **ℹ️ Dominio personalizado (`www.agrodasin.org.co`)**
-> Si ingresaste `www.agrodasin.org.co` y ves **"Comprobación de DNS en curso"** o **"HTTPS no disponible"**,
-> debes configurar el DNS en tu proveedor de dominio. Ver sección
-> [🌐 Dominio personalizado: www.agrodasin.org.co](#-dominio-personalizado-wwwagrodasinorgco).
-> Si no necesitas un dominio propio, **borra ese texto del campo** y déjalo vacío —
-> el portal funciona en `https://danielojedameza-png.github.io/RADAR-2-POR-FUERA/`.
+> Si ves **"Comprobación de DNS en curso"** o **"HTTPS no disponible"** y no puedes borrar el campo,
+> **fusiona primero esta PR** — al desplegar, el dominio personalizado se limpiará automáticamente
+> porque el repositorio ya no incluye un archivo `CNAME`.
+> Ver sección [🌐 Dominio personalizado (opcional)](#-dominio-personalizado-opcional).
 
 #### ✅ Si ya completaste los Pasos 1 y 2 — ir directamente al Paso 3
 
@@ -108,70 +107,56 @@ GitHub solo lista y ejecuta workflows que están en la rama principal.
 #### ¡Listo! El portal está en línea en:
 
 **👉 [https://danielojedameza-png.github.io/RADAR-2-POR-FUERA/](https://danielojedameza-png.github.io/RADAR-2-POR-FUERA/)**
-*(o en `https://www.agrodasin.org.co` si ya configuraste el DNS — ver sección más abajo)*
 
 Se actualiza automáticamente todos los días a las **7 am hora Colombia**.
 
 ---
 
-## 🌐 Dominio personalizado: www.agrodasin.org.co
+## 🌐 Dominio personalizado (opcional)
 
-> **Situación actual:** Ingresaste `www.agrodasin.org.co` en el campo *"Dominio personalizado"*
-> de GitHub Pages, pero GitHub muestra **"Comprobación de DNS en curso"** y
-> **"HTTPS no disponible"**. Esto ocurre porque el DNS del dominio aún no apunta a GitHub.
-
-Tienes dos opciones:
-
----
-
-### Opción 1 — Quitar el dominio personalizado (más rápida) ⭐
-
-Si no necesitas la URL `www.agrodasin.org.co` ahora mismo, borra el dominio personalizado
-y el portal funcionará de inmediato en la dirección gratuita de GitHub:
-
-1. Ir a **Settings → Pages** en el repositorio
-2. En el campo **"Dominio personalizado"**, borrar `www.agrodasin.org.co`
-3. Clic en **`Save`**
-4. El portal queda en: **`https://danielojedameza-png.github.io/RADAR-2-POR-FUERA/`**
+> **Si ves "Comprobación de DNS en curso" o no puedes borrar `www.agrodasin.org.co`
+> del campo "Dominio personalizado" en Settings → Pages:**
+>
+> Este problema lo causaba el archivo `CNAME` que estaba en el repositorio.
+> **Ya ha sido eliminado.** Al fusionar esta PR y ejecutarse el despliegue,
+> el portal quedará en la URL gratuita de GitHub sin dominio personalizado:
+> **`https://danielojedameza-png.github.io/RADAR-2-POR-FUERA/`**
+>
+> Si después de fusionar la PR el campo sigue mostrando `www.agrodasin.org.co`,
+> puedes borrarlo manualmente: **Settings → Pages → campo "Dominio personalizado"
+> → borrarlo → Save**.
 
 ---
 
-### Opción 2 — Configurar el DNS del dominio (para usar www.agrodasin.org.co)
+### Si más adelante quieres usar www.agrodasin.org.co
 
-Para que `www.agrodasin.org.co` apunte al portal de GitHub, debes agregar un registro DNS
-en el panel de control de tu proveedor de dominio (GoDaddy, Namecheap, Wix, Google Domains,
-NIC Colombia, etc.).
+Para que `www.agrodasin.org.co` apunte al portal de GitHub debes hacer **dos cosas**:
 
-#### Registro DNS que debes agregar
+**1) Agregar un registro DNS en el panel de tu proveedor de dominio**
 
 | Tipo | Nombre / Host | Valor / Destino | TTL |
 |------|---------------|-----------------|-----|
 | `CNAME` | `www` | `danielojedameza-png.github.io` | 3600 (o "Automático") |
 
-#### Pasos en tu proveedor de dominios
+Pasos:
+1. Iniciar sesión en el panel de tu proveedor de dominio (GoDaddy, Namecheap, NIC Colombia, etc.)
+2. Buscar la sección **DNS** o **Gestión de DNS**
+3. Agregar registro `CNAME` con Nombre = `www`, Valor = `danielojedameza-png.github.io`
+4. Guardar y esperar 10 min–48 h para la propagación DNS
 
-1. Iniciar sesión en el panel de tu proveedor de dominio
-2. Buscar la sección **DNS** o **Gestión de DNS** o **Zone Editor**
-3. Agregar un nuevo registro de tipo **CNAME**:
-   - **Nombre / Host**: `www`
-   - **Valor / Apunta a**: `danielojedameza-png.github.io`
-4. Guardar el registro
-5. Esperar entre **10 minutos y 48 horas** (la propagación DNS varía)
-6. Volver a **Settings → Pages** en GitHub — la verificación aparecerá como ✅
+**2) Agregar el archivo `CNAME` al repositorio**
 
-#### Una vez verificado el DNS
+Crear el archivo `CNAME` en la raíz del repositorio con este contenido exacto:
+```
+www.agrodasin.org.co
+```
 
-1. En **Settings → Pages**, en el campo **"Dominio personalizado"**, escribir:
-   ```
-   www.agrodasin.org.co
-   ```
+**3) Volver a Settings → Pages y verificar**
+
+1. En el campo **"Dominio personalizado"**, escribir `www.agrodasin.org.co`
 2. Clic en **`Save`** — GitHub verificará automáticamente
-3. Activar la casilla **"Enforce HTTPS"** cuando esté disponible ✅
-4. El portal quedará accesible en: **`https://www.agrodasin.org.co`**
-
-> **ℹ️ Nota técnica:** Este repositorio ya incluye el archivo `CNAME` con `www.agrodasin.org.co`.
-> GitHub Pages lo usa para mantener el dominio personalizado entre despliegues.
-> **No necesitas crear ese archivo manualmente.**
+3. Activar **"Enforce HTTPS"** cuando esté disponible ✅
+4. El portal quedará en: **`https://www.agrodasin.org.co`**
 
 ---
 
