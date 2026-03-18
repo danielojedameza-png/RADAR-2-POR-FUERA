@@ -2,6 +2,7 @@
 
 > **🔗 VER EL PORTAL EN VIVO →**
 > **[https://danielojedameza-png.github.io/RADAR-2-POR-FUERA/](https://danielojedameza-png.github.io/RADAR-2-POR-FUERA/)**
+> *(Requiere repositorio público — ver instrucciones abajo)*
 
 Sistema de vigilancia de oportunidades de contratación pública para
 asociaciones, productores rurales, piscicultores y organizaciones del
@@ -15,20 +16,44 @@ Colombia Compra Eficiente (actualización diaria).
 
 ## 🖥️ Cómo ver el resultado
 
-### Opción 1 — Portal en línea (GitHub Pages) ⭐ Recomendada
+### ⚠️ El repositorio es privado — GitHub Pages no funciona en repositorios privados gratuitos
 
-El portal se publica automáticamente en:
+Cuando entras a **Settings → Pages** y ves el mensaje
+*"Upgrade or make this repository public to enable Pages"*,
+significa que el repositorio es **privado** y GitHub Pages requiere una de estas dos acciones:
+
+---
+
+### Solución A — Hacer el repositorio público ⭐ Recomendada
+
+1. Ir a **Settings → General → Danger Zone**
+2. Clic en **"Change repository visibility"**
+3. Seleccionar **"Make public"** y confirmar
+4. Ir a **Settings → Pages → Source → GitHub Actions**
+5. Ejecutar el workflow desde **Actions → 🌿 Radar AGRODASIN — Publicar Portal → Run workflow**
+
+Después de esto, el portal estará disponible en:
 
 **👉 [https://danielojedameza-png.github.io/RADAR-2-POR-FUERA/](https://danielojedameza-png.github.io/RADAR-2-POR-FUERA/)**
 
-Se actualiza solo, todos los días a las **7 am hora Colombia**.
-También puede forzar una actualización manual desde la pestaña
-**Actions → 🌿 Radar AGRODASIN — Publicar Portal → Run workflow**.
+Se actualiza automáticamente todos los días a las **7 am hora Colombia**.
 
-> **Primer uso:** Para que GitHub Pages funcione, active la opción en:
-> `Settings → Pages → Source → GitHub Actions`
+---
 
-### Opción 2 — Local (Python)
+### Solución B — Descargar el portal desde Actions (sin hacer el repo público)
+
+El workflow siempre genera el portal y lo sube como **artefacto descargable**, aunque el repositorio sea privado:
+
+1. Ir a la pestaña **Actions**
+2. Clic en el último workflow **"🌿 Radar AGRODASIN — Publicar Portal"**
+3. Si no hay ejecuciones aún, clic en **"Run workflow"** para lanzarlo manualmente
+4. Al finalizar, buscar la sección **Artifacts** al pie de la página
+5. Descargar **`radar-agrodasin-portal`** (archivo `.zip`)
+6. Descomprimir y abrir **`index.html`** en el navegador
+
+---
+
+### Solución C — Local (Python)
 
 ```bash
 # Con datos reales de SECOP II
@@ -38,7 +63,7 @@ python -m radar_agrodasin --days 90 --output index.html
 python -m radar_agrodasin --dry-run --output index.html
 ```
 
-Luego abra `index.html` en su navegador.
+Luego abrir `index.html` en el navegador.
 
 ---
 

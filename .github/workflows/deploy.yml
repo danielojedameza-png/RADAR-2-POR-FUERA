@@ -27,7 +27,7 @@ on:
           - "false"
           - "true"
 
-# Permisos necesarios para publicar en GitHub Pages
+# Permisos necesarios para publicar en GitHub Pages (ignorados si el repo es privado)
 permissions:
   contents: read
   pages: write
@@ -42,6 +42,10 @@ jobs:
   build:
     name: Generar portal Radar AGRODASIN
     runs-on: ubuntu-latest
+
+    # Exportar si Pages está disponible para el job de deploy
+    outputs:
+      pages_enabled: ${{ steps.pages_ready.outputs.enabled }}
 
     steps:
       - name: 📥 Checkout del repositorio
@@ -61,7 +65,6 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: 🏗️ Generar index.html con datos reales de SECOP II
-        id: generate
         run: |
           DAYS="${{ github.event.inputs.days || '90' }}"
           DRY_RUN="${{ github.event.inputs.dry_run || 'false' }}"
@@ -90,19 +93,59 @@ jobs:
           print(f"✅ Portal válido ({len(content):,} bytes)")
           EOF
 
+      # ── Descarga directa — funciona SIEMPRE, incluso con repositorio privado ──
+      - name: 📎 Subir portal como artefacto descargable
+        uses: actions/upload-artifact@v4
+        with:
+          name: radar-agrodasin-portal
+          path: index.html
+          retention-days: 30
+
+      # ── GitHub Pages — solo funciona si el repositorio es PÚBLICO ──
       - name: ⚙️ Configurar GitHub Pages
+        id: configure_pages
         uses: actions/configure-pages@v5
+        # Si el repo es privado, este paso falla pero el workflow continúa
+        continue-on-error: true
 
       - name: 📤 Subir artefacto de GitHub Pages
+        # Solo intentar si configure-pages tuvo éxito
+        if: steps.configure_pages.outcome == 'success'
         uses: actions/upload-pages-artifact@v3
         with:
-          # Publicar solo el archivo index.html desde la raíz
           path: "."
+
+      - name: 📢 Estado de Pages
+        id: pages_ready
+        run: |
+          if [ "${{ steps.configure_pages.outcome }}" = "success" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+            echo "✅ GitHub Pages disponible — se desplegará el portal."
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo ""
+            echo "══════════════════════════════════════════════════════════"
+            echo "⚠️  GitHub Pages NO está disponible para este repositorio."
+            echo "══════════════════════════════════════════════════════════"
+            echo ""
+            echo "CAUSA: el repositorio es PRIVADO."
+            echo "GitHub Pages gratuito requiere repositorio PÚBLICO."
+            echo ""
+            echo "SOLUCIÓN A — Hacer el repositorio público (recomendado):"
+            echo "  Settings → General → Danger Zone → Change repository visibility → Public"
+            echo ""
+            echo "SOLUCIÓN B — Descargar el portal ahora mismo:"
+            echo "  Actions → este workflow → Artifacts → radar-agrodasin-portal"
+            echo "  Descomprimir el .zip y abrir index.html en el navegador."
+            echo ""
+          fi
 
   deploy:
     name: Publicar en GitHub Pages
     needs: build
     runs-on: ubuntu-latest
+    # Solo ejecutar si Pages está habilitado (repo público)
+    if: needs.build.outputs.pages_enabled == 'true'
 
     environment:
       name: github-pages
