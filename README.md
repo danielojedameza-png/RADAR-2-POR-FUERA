@@ -26,13 +26,38 @@ significa que el repositorio es **privado** y GitHub Pages requiere una de estas
 
 ### Solución A — Hacer el repositorio público ⭐ Recomendada
 
-1. Ir a **Settings → General → Danger Zone**
-2. Clic en **"Change repository visibility"**
-3. Seleccionar **"Make public"** y confirmar
-4. Ir a **Settings → Pages → Source → GitHub Actions**
-5. Ejecutar el workflow desde **Actions → 🌿 Radar AGRODASIN — Publicar Portal → Run workflow**
+#### Paso 1 — Cambiar la visibilidad del repositorio a Público
 
-Después de esto, el portal estará disponible en:
+1. Estando en GitHub, ir al repositorio **`RADAR-2-POR-FUERA`**
+2. Clic en la pestaña **`Settings`** (engranaje ⚙️, última pestaña del menú superior)
+3. En el menú lateral izquierdo, clic en **`General`** (primera opción)
+4. Bajar hasta el final de la página hasta la sección roja **"Danger Zone"**
+5. Clic en el botón **`Change repository visibility`**
+6. En el cuadro que aparece, seleccionar **`Make public`**
+7. Leer el aviso y clic en **`I want to make this repository public`**
+8. Escribir en el campo de texto el nombre del repositorio:
+   ```
+   RADAR-2-POR-FUERA
+   ```
+9. Clic en el botón rojo **`I understand, change repository visibility`**
+10. GitHub mostrará una confirmación: *"This repository is now public"* ✅
+
+#### Paso 2 — Activar GitHub Pages
+
+1. En el menú lateral izquierdo de **Settings**, buscar la sección **"Code and automation"**
+2. Clic en **`Pages`**
+3. En la sección **"Build and deployment"**, bajo **"Source"**, seleccionar **`GitHub Actions`**
+   *(ya no aparecerá el mensaje "Upgrade or make this repository public")*
+
+#### Paso 3 — Publicar el portal por primera vez
+
+1. Clic en la pestaña **`Actions`** (menú superior del repositorio)
+2. En el panel izquierdo, clic en **`🌿 Radar AGRODASIN — Publicar Portal`**
+3. Clic en el botón **`Run workflow`** (lado derecho)
+4. Dejar los valores por defecto y clic en el botón verde **`Run workflow`**
+5. Esperar ~2 minutos a que termine (aparecerá un ✅ verde)
+
+#### ¡Listo! El portal está en línea en:
 
 **👉 [https://danielojedameza-png.github.io/RADAR-2-POR-FUERA/](https://danielojedameza-png.github.io/RADAR-2-POR-FUERA/)**
 
