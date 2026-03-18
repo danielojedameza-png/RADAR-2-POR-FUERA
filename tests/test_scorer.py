@@ -333,6 +333,31 @@ class TestGenerator:
         assert "SECOP" in content
         assert "Alta prioridad" in content or "ALTA" in content
 
+    def test_generate_html_has_favicon(self, tmp_path):
+        from radar_agrodasin import generator
+
+        output = str(tmp_path / "favicon_test.html")
+        generator.generate_html([], output_path=output)
+
+        with open(output, encoding="utf-8") as f:
+            content = f.read()
+
+        assert 'rel="icon"' in content, "El HTML debe incluir un tag <link rel='icon'> (favicon)"
+        assert "data:image/svg+xml" in content, "El favicon debe ser un SVG inline (data URI)"
+
+    def test_generate_html_has_og_image(self, tmp_path):
+        from radar_agrodasin import generator
+
+        output = str(tmp_path / "og_test.html")
+        generator.generate_html([], output_path=output)
+
+        with open(output, encoding="utf-8") as f:
+            content = f.read()
+
+        assert 'property="og:image"' in content, "El HTML debe incluir la meta tag og:image"
+        assert 'property="og:title"' in content, "El HTML debe incluir la meta tag og:title"
+        assert 'name="twitter:card"' in content, "El HTML debe incluir la meta tag twitter:card"
+
     def test_generate_html_empty(self, tmp_path):
         from radar_agrodasin import generator
 

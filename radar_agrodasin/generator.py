@@ -227,8 +227,17 @@ def generate_html(records: list[dict], output_path: str = "index.html") -> None:
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Radar AGRODASIN – Oportunidades del Campo</title>
+  <!-- Favicon inline (SVG) — evita el error 404 en GET /favicon.ico -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%231a6b3c'/%3E%3Ctext x='16' y='22' font-size='18' text-anchor='middle' fill='white'%3E%F0%9F%8C%BF%3C/text%3E%3C/svg%3E">
+  <!-- Meta Open Graph — imagen de previsualización para redes sociales -->
+  <meta property="og:title" content="Radar AGRODASIN – Oportunidades del Campo">
+  <meta property="og:description" content="Procesos de contratación pública relevantes para el sector agropecuario colombiano — datos desde SECOP II.">
+  <meta property="og:image" content="https://danielojedameza-png.github.io/RADAR-2-POR-FUERA/og-image.svg">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-        rel="stylesheet">
+        rel="stylesheet"
+        crossorigin="anonymous">
   <style>
     :root {{
       --color-alta: #28a745;
@@ -516,7 +525,8 @@ def generate_html(records: list[dict], output_path: str = "index.html") -> None:
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous">
 </script>
 <script>
   // Datos de detalle embebidos
