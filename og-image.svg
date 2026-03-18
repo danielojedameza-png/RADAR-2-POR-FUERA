@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- Fondo verde AGRODASIN -->
+  <rect width="1200" height="630" fill="#1a6b3c"/>
+  <!-- Gradiente decorativo -->
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a6b3c"/>
+      <stop offset="100%" style="stop-color:#2d9e5f"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- Texto principal -->
+  <text x="600" y="240" font-family="Arial, sans-serif" font-size="80" font-weight="bold"
+        text-anchor="middle" fill="white">🌿 Radar AGRODASIN</text>
+  <!-- Subtítulo -->
+  <text x="600" y="340" font-family="Arial, sans-serif" font-size="40"
+        text-anchor="middle" fill="rgba(255,255,255,0.85)">Boletín de Oportunidades del Campo</text>
+  <!-- Descripción -->
+  <text x="600" y="420" font-family="Arial, sans-serif" font-size="28"
+        text-anchor="middle" fill="rgba(255,255,255,0.7)">Contratación pública · Sector agropecuario colombiano · SECOP II</text>
+  <!-- Línea decorativa -->
+  <line x1="200" y1="470" x2="1000" y2="470" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+  <!-- URL -->
+  <text x="600" y="520" font-family="Arial, sans-serif" font-size="24"
+        text-anchor="middle" fill="rgba(255,255,255,0.6)">danielojedameza-png.github.io/RADAR-2-POR-FUERA</text>
+</svg>
