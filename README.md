@@ -26,36 +26,47 @@ significa que el repositorio es **privado** y GitHub Pages requiere una de estas
 
 ### Solución A — Hacer el repositorio público ⭐ Recomendada
 
-#### Paso 1 — Cambiar la visibilidad del repositorio a Público
+> **💡 ¿Por qué no aparece el workflow de Radar en la pestaña Actions?**
+> Porque el workflow vive en esta PR y aún no ha sido fusionado a `main`.
+> GitHub solo ejecuta workflows de la rama **principal (main)**.
+> Sigue los 4 pasos en orden y el portal se publicará automáticamente al fusionar.
 
-1. Estando en GitHub, ir al repositorio **`RADAR-2-POR-FUERA`**
+---
+
+#### Paso 1 — Hacer el repositorio público
+
+1. Ir al repositorio **`RADAR-2-POR-FUERA`** en GitHub
 2. Clic en la pestaña **`Settings`** (engranaje ⚙️, última pestaña del menú superior)
 3. En el menú lateral izquierdo, clic en **`General`** (primera opción)
 4. Bajar hasta el final de la página hasta la sección roja **"Danger Zone"**
 5. Clic en el botón **`Change repository visibility`**
 6. En el cuadro que aparece, seleccionar **`Make public`**
-7. Leer el aviso y clic en **`I want to make this repository public`**
-8. Escribir en el campo de texto el nombre del repositorio:
+7. Clic en **`I want to make this repository public`**
+8. Escribir en el campo de texto:
    ```
    RADAR-2-POR-FUERA
    ```
 9. Clic en el botón rojo **`I understand, change repository visibility`**
-10. GitHub mostrará una confirmación: *"This repository is now public"* ✅
+10. GitHub confirmará: *"This repository is now public"* ✅
 
 #### Paso 2 — Activar GitHub Pages
 
-1. En el menú lateral izquierdo de **Settings**, buscar la sección **"Code and automation"**
-2. Clic en **`Pages`**
-3. En la sección **"Build and deployment"**, bajo **"Source"**, seleccionar **`GitHub Actions`**
-   *(ya no aparecerá el mensaje "Upgrade or make this repository public")*
+1. Seguir en **Settings** → menú lateral → sección **"Code and automation"** → clic en **`Pages`**
+2. Ahora ya **no aparece** el mensaje *"Upgrade or make this repository public"*
+3. En **"Build and deployment"** → **"Source"** → seleccionar **`GitHub Actions`**
+4. Clic en **`Save`** si aparece el botón ✅
 
-#### Paso 3 — Publicar el portal por primera vez
+#### Paso 3 — Fusionar la Pull Request a main
 
-1. Clic en la pestaña **`Actions`** (menú superior del repositorio)
-2. En el panel izquierdo, clic en **`🌿 Radar AGRODASIN — Publicar Portal`**
-3. Clic en el botón **`Run workflow`** (lado derecho)
-4. Dejar los valores por defecto y clic en el botón verde **`Run workflow`**
-5. Esperar ~2 minutos a que termine (aparecerá un ✅ verde)
+> Este es el paso que pone el workflow en marcha. Al fusionar, el portal se publica solo.
+
+1. Clic en la pestaña **`Pull requests`** (menú superior del repositorio)
+2. Abrir la PR titulada **"Fix: workflow hard-fails on private repo…"**
+3. Si la PR está en estado **Draft**, clic en **`Ready for review`** primero
+4. Clic en el botón verde **`Merge pull request`**
+5. Clic en **`Confirm merge`**
+6. Ir a la pestaña **`Actions`** — ahora verás el workflow **`🌿 Radar AGRODASIN — Publicar Portal`** corriendo automáticamente ✅
+7. Esperar ~2 minutos a que aparezca el ✅ verde
 
 #### ¡Listo! El portal está en línea en:
 
