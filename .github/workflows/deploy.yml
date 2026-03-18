@@ -1,0 +1,114 @@
+name: 🌿 Radar AGRODASIN — Publicar Portal
+
+on:
+  # Actualización automática diaria a las 7 am hora Colombia
+  # (Colombia no aplica horario de verano — siempre UTC-5 = 12:00 UTC)
+  schedule:
+    - cron: "0 12 * * *"
+
+  # También ejecutar cuando se haga push a main
+  push:
+    branches:
+      - main
+
+  # Permitir ejecución manual desde la pestaña Actions
+  workflow_dispatch:
+    inputs:
+      days:
+        description: "Procesos de los últimos N días"
+        required: false
+        default: "90"
+      dry_run:
+        description: "Usar datos de muestra (dry-run)"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+
+# Permisos necesarios para publicar en GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Solo ejecutar un despliegue a la vez
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Generar portal Radar AGRODASIN
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: 🐍 Configurar Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: 📦 Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          # El módulo radar_agrodasin usa solo stdlib para fetch.py (urllib).
+          # Se instala requirements.txt por si se añaden dependencias en el futuro.
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: 🏗️ Generar index.html con datos reales de SECOP II
+        id: generate
+        run: |
+          DAYS="${{ github.event.inputs.days || '90' }}"
+          DRY_RUN="${{ github.event.inputs.dry_run || 'false' }}"
+
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "Modo dry-run activado"
+            python -m radar_agrodasin --dry-run --output index.html --verbose
+          else
+            echo "Consultando SECOP II — últimos ${DAYS} días"
+            python -m radar_agrodasin --days "${DAYS}" --output index.html --verbose \
+              || (echo "⚠️ Falló la consulta a SECOP II. Usando datos de muestra." && \
+                  python -m radar_agrodasin --dry-run --output index.html --verbose)
+          fi
+
+          echo "Tamaño del portal generado:"
+          ls -lh index.html
+
+      - name: 🔍 Verificar contenido del portal
+        run: |
+          python - <<'EOF'
+          with open("index.html", encoding="utf-8") as f:
+              content = f.read()
+          assert "Radar AGRODASIN" in content, "Falta título"
+          assert "SECOP" in content, "Falta referencia a SECOP"
+          assert "bootstrap" in content.lower(), "Falta Bootstrap"
+          print(f"✅ Portal válido ({len(content):,} bytes)")
+          EOF
+
+      - name: ⚙️ Configurar GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: 📤 Subir artefacto de GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Publicar solo el archivo index.html desde la raíz
+          path: "."
+
+  deploy:
+    name: Publicar en GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: 🚀 Desplegar en GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

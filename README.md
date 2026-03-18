@@ -1,5 +1,8 @@
 # 🌿 Radar AGRODASIN — Boletín de Oportunidades del Campo
 
+> **🔗 VER EL PORTAL EN VIVO →**
+> **[https://danielojedameza-png.github.io/RADAR-2-POR-FUERA/](https://danielojedameza-png.github.io/RADAR-2-POR-FUERA/)**
+
 Sistema de vigilancia de oportunidades de contratación pública para
 asociaciones, productores rurales, piscicultores y organizaciones del
 sector agropecuario colombiano.
@@ -7,6 +10,35 @@ sector agropecuario colombiano.
 Datos obtenidos desde **SECOP II – Procesos de Contratación** publicados
 en [datos.gov.co](https://www.datos.gov.co/resource/p6dx-8zbt) por
 Colombia Compra Eficiente (actualización diaria).
+
+---
+
+## 🖥️ Cómo ver el resultado
+
+### Opción 1 — Portal en línea (GitHub Pages) ⭐ Recomendada
+
+El portal se publica automáticamente en:
+
+**👉 [https://danielojedameza-png.github.io/RADAR-2-POR-FUERA/](https://danielojedameza-png.github.io/RADAR-2-POR-FUERA/)**
+
+Se actualiza solo, todos los días a las **7 am hora Colombia**.
+También puede forzar una actualización manual desde la pestaña
+**Actions → 🌿 Radar AGRODASIN — Publicar Portal → Run workflow**.
+
+> **Primer uso:** Para que GitHub Pages funcione, active la opción en:
+> `Settings → Pages → Source → GitHub Actions`
+
+### Opción 2 — Local (Python)
+
+```bash
+# Con datos reales de SECOP II
+python -m radar_agrodasin --days 90 --output index.html
+
+# Con datos de muestra (sin internet)
+python -m radar_agrodasin --dry-run --output index.html
+```
+
+Luego abra `index.html` en su navegador.
 
 ---
 
@@ -37,38 +69,6 @@ Cada proceso recibe una puntuación basada en:
 
 ---
 
-## Uso rápido
-
-### Requisitos
-
-- Python 3.9+
-
-### Generar el portal con datos reales de SECOP II
-
-```bash
-python -m radar_agrodasin --days 90 --output index.html
-```
-
-### Modo demo (sin llamada a la API)
-
-```bash
-python -m radar_agrodasin --dry-run --output index.html
-```
-
-Abra `index.html` en el navegador para ver el portal.
-
-### Opciones del CLI
-
-| Opción | Default | Descripción |
-|--------|---------|-------------|
-| `--output PATH` | `index.html` | Archivo HTML de salida |
-| `--days N` | `90` | Procesos de los últimos N días |
-| `--max-records N` | `5000` | Límite de registros a descargar |
-| `--dry-run` | — | Usa datos de muestra |
-| `--verbose` | — | Logging detallado |
-
----
-
 ## Estructura del repositorio
 
 ```
@@ -79,6 +79,9 @@ radar_agrodasin/
 ├── fetch.py          # Consulta a la API de Datos Abiertos SECOP II
 ├── scorer.py         # Motor de relevancia AGRODASIN
 └── generator.py      # Generador de HTML estático (3 capas)
+.github/
+└── workflows/
+    └── deploy.yml    # Publicación automática en GitHub Pages
 tests/
 └── test_scorer.py    # Pruebas unitarias del motor de puntuación
 index.html            # Portal generado (demo con datos de muestra)
@@ -100,13 +103,38 @@ setup.py
 
 ---
 
-## Flujo de actualización recomendado
+## Flujo de actualización automática
+
+El workflow de GitHub Actions se encarga de todo:
 
 ```
-Lunes    → python -m radar_agrodasin --days 7 --output index.html
-Miércoles→ Revisar oportunidades ALTA y publicar en web / WhatsApp
-Viernes  → Boletín semanal con top oportunidades
+Cada día a las 7 am Colombia → genera index.html → publica en GitHub Pages
 ```
+
+Para actualización manual:
+1. Ir a **Actions → 🌿 Radar AGRODASIN — Publicar Portal**
+2. Clic en **Run workflow**
+3. Elegir cuántos días de datos consultar
+
+También puede correr localmente:
+
+```bash
+# Datos reales
+python -m radar_agrodasin --days 30 --output index.html
+
+# Sin internet
+python -m radar_agrodasin --dry-run --output index.html
+```
+
+### Opciones del CLI
+
+| Opción | Default | Descripción |
+|--------|---------|-------------|
+| `--output PATH` | `index.html` | Archivo HTML de salida |
+| `--days N` | `90` | Procesos de los últimos N días |
+| `--max-records N` | `5000` | Límite de registros a descargar |
+| `--dry-run` | — | Usa datos de muestra |
+| `--verbose` | — | Logging detallado |
 
 ---
 
